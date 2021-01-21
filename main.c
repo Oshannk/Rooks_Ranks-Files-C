@@ -54,32 +54,81 @@ int main ()
         pieces[i].rank = r;
         pieces[i].file = f;
     }
-    
+    int cFileP = 1;
+    int cFileM = 2;
+    int cRankP = 3;
+    int cRankM = 4;
     int location = 0;
     int count = 0;
+    int def = 0;
+    int defP = 0;
+    int defM = 0;
+    int defP2 = 0;
+    int defM2 = 0;
     int ids[n];
+   
     for(int a = 1; a<=n; a++){
+        ids[cFileP] = 0;
+        ids[cFileM] = 0;
+        ids[cRankP] = 0;
+        ids[cRankM] = 0;
+        defP = 0;
+        defM = 0;
+        defP2 = 0;
+        defM2 = 0;
+        
+        
         for(int j = 1; j<=n; j++){
             if(a!=j&&pieces[a].rank == pieces[j].rank){
-                ids[count] = pieces[j].id;
-                count++;
+                def = pieces[a].file - pieces[j].file; 
+                if(def>0){
+                    if(defP>def||defP==0){
+                        ids[cFileP] = pieces[j].id;
+                        defP = def;
+                    }
+                }
+                if(def<0){ 
+                    if(defM<def||defM==0){  
+                        ids[cFileM] = pieces[j].id;
+                        defM = def;
+                    }
+                }
             }
             if(a!=j&&pieces[a].file == pieces[j].file){
-                ids[count] = pieces[j].id;
+                def = pieces[a].rank - pieces[j].rank;
+                if(def>0){
+                    if(defP2>def||defP2==0){
+                        ids[cRankP] = pieces[j].id;
+                        defP2 = def;
+                    }
+                }
+                if(def<0){
+                    if(defM2<def||defM2==0){
+                        ids[cRankM] = pieces[j].id;
+                        defM2 = def;
+                    }
+                }
+            }
+        }
+        
+        for(int b = 1; b<5; b++){
+            if(ids[b] != 0){
                 count++;
             }
         }
         printf("%d\t",count);
-        for(int b = 0; b<count; b++){
-            printf("%d ",ids[b]);
+        for(int b = 1; b<5; b++){
+            if(ids[b] != 0){
+                printf("%d ",ids[b]);
+            }
+            
         }
         printf("\n");
         count = 0;
-        ids[n] = 0;
-        
     }
     
     return 0;
 }
+
 
 
